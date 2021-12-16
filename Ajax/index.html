@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<!--   <form action="some.php" method="post" >-->
+    <input type="text" name="title"class="title"><br><br>
+    <textarea name="content"class="content" cols="30" rows="10"></textarea><br><br>
+    <button type="submit" class="otpravka">Отправить</button><br><br>
+    <button type="submit" class="otpravka1">Вывод данных</button>
+    <div class="ааа"></div>
+
+
+<!--   </form>-->
+<script>
+    $(document).ready(function () {
+        $('button.otpravka').on('click', function () {
+            let titleValue = $('input.title').val();
+            let contentValue = $('textarea.content').val();
+
+            $.ajax({
+                method: "POST",
+                url: "some.php",
+                data: {title: titleValue, content: contentValue}
+            })
+                .done(function (msg) {
+                    // alert( "Data Saved: " + msg );
+                });
+            $('input.title').val('');
+            $('textarea.content').val('');
+
+        })
+        $('button.otpravka1').on('click', function () {
+            $.ajax({
+                url: "taf.php",
+                success: function (result1) {
+                    let a = JSON.parse(result1);
+                    $('div.ааа').html(a);
+                    for (let i = 0; i < a.length; i++) {
+                        $('div.ааа').append(a[i].title + " . " + a[i].content + '<br>');
+                    }
+                }
+            })
+        })
+        })
+
+
+     </script>
+
+</body>
+</html>
